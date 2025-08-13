@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-deployment-07
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-app-07
+  template:
+    metadata:
+      labels:
+        app: todo-app-07
+    spec:
+      containers:
+      - name: todo-app-07
+        image: trainingapcacr.azurecr.io/todo-app:training07-2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-service-07
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: todo-app-07
